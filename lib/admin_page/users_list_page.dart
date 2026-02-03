@@ -17,92 +17,7 @@ class _UsersListPageState extends State<UsersListPage> {
   bool _isLoading = true;
   String? _errorMessage;
 
-  Future<bool> _confirmDelete(int userId) async {
-    try {
-      final confirmed = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Delete User'),
-          content: const Text(
-              'Are you sure you want to delete this user and all their builds? This action cannot be undone.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: const Text('Delete'),
-            ),
-          ],
-        ),
-      );
-
-      if (confirmed != true) return false;
-      if (!mounted) return false;
-
-      // Show loading
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => const Center(child: CircularProgressIndicator()),
-      );
-
-      final result = await _databaseService.deleteUser(userId);
-
-      if (!mounted) return false;
-      Navigator.of(context, rootNavigator: true).pop();
-
-      if (result > 0) {
-        setState(() {
-          _users.removeWhere((user) => user['id'] == userId);
-        });
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('User and their builds deleted successfully'),
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 3),
-            ),
-          );
-        }
-        return true;
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Failed to delete user. Please try again.'),
-              backgroundColor: Colors.orange,
-              duration: Duration(seconds: 3),
-            ),
-          );
-        }
-        return false;
-      }
-    } catch (e) {
-      if (mounted) {
-        Navigator.of(context, rootNavigator: true).pop();
-        String errorMessage = 'Failed to delete user';
-        if (e.toString().contains('FOREIGN KEY constraint failed')) {
-          errorMessage = 'Cannot delete user. Some data is still referenced.';
-        } else if (e.toString().contains('database is locked')) {
-          errorMessage = 'Database is busy. Please try again in a moment.';
-        } else {
-          errorMessage = 'Error: ${e.toString().replaceAll('Exception: ', '')}';
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(errorMessage),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 4),
-          ),
-        );
-      }
-      return false;
-    }
-  }
-
+ 
   @override
   void initState() {
     super.initState();
@@ -276,11 +191,7 @@ class _UsersListPageState extends State<UsersListPage> {
                                             fontWeight: FontWeight.w500),
                                       ),
                                       subtitle: Text('$email\nBuilds: $buildCount'),
-                                      trailing: IconButton(
-                                        icon: const Icon(Icons.delete_outline,
-                                            color: Colors.red),
-                                        onPressed: () => _confirmDelete(user['id']),
-                                      ),
+                                     
                                     );
                                   },
                                 ),

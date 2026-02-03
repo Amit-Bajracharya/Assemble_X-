@@ -198,11 +198,13 @@ class _pageCaseState extends State<pageCase> {
                       items: [
                         "NZXT",
                         "Corsair",
+                        "Thermaltake",
                         "Cooler Master",
                         "Lian Li",
                         "Fractal Design",
+                        "Deepcool",
                         "Phanteks",
-                        "Asus"
+                        "Asus",
                       ].map((brand) {
                         return DropdownMenuItem(
                             value: brand,

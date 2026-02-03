@@ -285,7 +285,7 @@ CREATE TABLE user_build_table(
     );
   }
 
-  Future<Map<String, dynamic>?> getUserById(int id) async {
+    Future<Map<String, dynamic>?> getUserById(int id) async {
     final db = await database;
     final result = await db.query(
       _userinfoTable,
@@ -364,14 +364,27 @@ CREATE TABLE user_build_table(
     );
   }
 
-  Future<int> deleteUser(int id) async {
+Future<int> deleteUserAndBuilds(int userId) async {
   final db = await database;
-  return await db.delete(
-    _userinfoTable,
-    where: '$_userinfoIdColumnName = ?',
-    whereArgs: [id],
-  );
+
+  // Start a transaction to ensure atomic deletion
+  return await db.transaction((txn) async {
+    // Delete user's builds first
+    await txn.delete(
+      'user_build_table',
+      where: 'user_id = ?',
+      whereArgs: [userId],
+    );
+
+    // Then delete the user
+    return await txn.delete(
+      'userinfo',
+      where: 'id = ?',
+      whereArgs: [userId],
+    );
+  });
 }
+
 
   Future<int> getTotalBuilds() async {
     try {

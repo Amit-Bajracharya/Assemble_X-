@@ -159,7 +159,7 @@ class _pageStorageState extends State<pageStorage> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat'
                           ),
-                      items: ["SATA III", "NVMe PCIe 3.0", "NVMe PCIe 4.0", "NVMe PCIe 5.0"].map((type) {
+                      items: ["SATA III", "NVMe"].map((type) {
                         return DropdownMenuItem(
                             value: type,
                             child: Text(type, style: const TextStyle(color: Colors.black, fontSize: 16)));

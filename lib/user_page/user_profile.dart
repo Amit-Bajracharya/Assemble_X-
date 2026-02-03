@@ -79,7 +79,7 @@ class _UserProfileState extends State<UserProfile> with SingleTickerProviderStat
 
     if (savedUserId != null) {
       if (isAdmin) {
-        final admin = await _databaseService.getAdminById(savedUserId);
+        final admin = await _databaseService.getAdminById(1);
         if (admin != null) {
           setState(() {
             _loggedInUser = admin;
@@ -282,8 +282,10 @@ class _UserProfileState extends State<UserProfile> with SingleTickerProviderStat
                 MaterialPageRoute(builder: (_) => const RegisterPage()),
               );
             },
-            child: const Text("Register", style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 18)),
+            child: const Text(
+              "Register", 
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
+            ),
           ),
           const SizedBox(height: 10),
          
@@ -508,7 +510,7 @@ class _UserProfileState extends State<UserProfile> with SingleTickerProviderStat
                 if (confirm != true) return;
                 try {
                   final id = _loggedInUser!['id'] as int;
-                  await _databaseService.deleteUser(id);
+                  await _databaseService.deleteUserAndBuilds(id);
                   if (mounted) {
                     Navigator.of(ctx).pop();
                     await _logout();

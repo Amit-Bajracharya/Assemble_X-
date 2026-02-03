@@ -53,6 +53,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     try {
       final updated = await _db.updatePasswordByEmail(widget.email, newPassword);
+      
       if (updated > 0) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

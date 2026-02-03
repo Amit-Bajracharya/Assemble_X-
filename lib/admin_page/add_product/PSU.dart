@@ -174,7 +174,7 @@ class _pagePSUState extends State<pagePSU> {
                           fontSize: 18,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold),
-                      items: ["Corsair", "EVGA", "Seasonic", "Cooler Master", "ASUS"]
+                      items: ["Corsair", "EVGA", "Seasonic", "Cooler Master", "ASUS", "Thermaltake"]
                           .map((brand) {
                         return DropdownMenuItem(
                             value: brand,

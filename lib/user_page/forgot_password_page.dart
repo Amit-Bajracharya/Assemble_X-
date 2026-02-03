@@ -46,6 +46,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     try {
       final user = await _db.getUserByEmail(email);
+
       if (user == null) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

@@ -1,3 +1,4 @@
+import 'package:assemblex/user_page/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -51,8 +52,12 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
             child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications, color: Colors.white),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder:  (context)=> UserProfile())
+                );
+              },
+              icon: const Icon(Icons.person, color: Colors.white),
             ),
           ),
         )
