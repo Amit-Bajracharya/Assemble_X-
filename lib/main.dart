@@ -1,10 +1,19 @@
 import 'package:assemblex/admin_page/edit_admin.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:assemblex/user_page/homepage.dart';
+import 'dart:ui';
 
 void main() {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details); // shows error but doesn't crash
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    debugPrint('Error: $error');
+    return true; // prevents emulator from shutting down
+  };
+
   runApp(const MyApp());
 }
 
@@ -15,32 +24,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-
       themeMode: ThemeMode.light,
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
-
-   
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: Color(0xFF4A90E2),      // Soft Blue
+          primary: Color(0xFF4A90E2),
           onPrimary: Colors.white,
-          secondary: Color(0xFFF5A623),    // Warm Orange
+          secondary: Color(0xFFF5A623),
           onSecondary: Colors.white,
           error: Color(0xFFEF4444),
           onError: Colors.white,
           background: Color(0xFFFFFFFF),
           onBackground: Color(0xFF1F2937),
-          surface: Color(0xFFF9FAFB),       // Cards
+          surface: Color(0xFFF9FAFB),
           onSurface: Color(0xFF1F2937),
         ),
-
-        
         scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-
-  
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFFFFFFFF),
           foregroundColor: Color(0xFF4A90E2),
@@ -48,8 +49,6 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           iconTheme: IconThemeData(color: Color(0xFF4A90E2)),
         ),
-
-     
         textTheme: GoogleFonts.poppinsTextTheme().copyWith(
           titleLarge: GoogleFonts.poppins(
             fontSize: 28,
@@ -97,8 +96,6 @@ class MyApp extends StatelessWidget {
             color: const Color(0xFF4A90E2),
           ),
         ),
-
-     
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF4A90E2),
@@ -109,24 +106,16 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-
-     
-
-
         iconTheme: const IconThemeData(
           color: Color(0xFF4A90E2),
           size: 22,
         ),
-
-    
         dividerTheme: const DividerThemeData(
           color: Color(0xFFE5E7EB),
           thickness: 1,
         ),
       ),
-
-    
-      home:  AssembleX_home(),
+      home: AssembleX_home(),
     );
   }
 }
