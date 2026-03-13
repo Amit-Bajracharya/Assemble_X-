@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # assemblex
 
 A new Flutter project.
