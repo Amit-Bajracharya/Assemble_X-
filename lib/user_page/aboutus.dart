@@ -20,10 +20,7 @@ class AboutUS extends StatelessWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35),
-              ),
+             
             ),
           ),
 
@@ -34,7 +31,6 @@ class AboutUS extends StatelessWidget {
               length: 2,
               child: Column(
                 children: [
-                
 
                   // ✅ TITLE
                   Center(
@@ -52,7 +48,7 @@ class AboutUS extends StatelessWidget {
 
                   // ✅ TAB BAR (NO LINE UNDER IT)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                   
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(14),
@@ -80,7 +76,7 @@ class AboutUS extends StatelessWidget {
 
                    SizedBox(height: 8), // tighter gap
                   Container(
-                    height: 670,
+                    height: 700,
                   width: double.infinity,
                     padding: const EdgeInsets.all(12),
                     decoration:  BoxDecoration(

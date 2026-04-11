@@ -62,7 +62,9 @@ class PCRecommendationTrainer:
         return True
         
     def check_component_in_database(self, component_id: int, category: str) -> bool:
-    
+        """
+        Check if a component exists in the database
+        """
         try:
             # Get the actual table name from mapping
             table_name = self.table_mapping.get(category)
@@ -209,7 +211,9 @@ class PCRecommendationTrainer:
             return pd.DataFrame()
 
     def load_and_combine_datasets(self) -> pd.DataFrame:
-    
+        """
+        Load and combine component datasets from /datasets and database
+        """
         logger.info(" Loading component datasets from /datasets and database...")
 
         # Load dataset files
@@ -397,13 +401,18 @@ class PCRecommendationTrainer:
                 
                 # STRICT CHECK: Only include if in database
                 if self.check_component_in_database(rec_id, rec_category):
+                    # Handle NaN values safely
+                    brand = component.get('brand', '')
+                    if pd.isna(brand):
+                        brand = ''
+                    
                     recommendations.append({
                         'id': rec_id,
                         'model_name': component['model_name'],
                         'category': rec_category,
                         'price': int(component.get('price', 0)),
                         'similarity_score': float(score),
-                        'brand': component.get('brand', ''),
+                        'brand': brand,
                         'in_database': True,
                         'availability_status': 'Available in store',
                         'reason': self._generate_recommendation_reason(component, score)
@@ -413,7 +422,9 @@ class PCRecommendationTrainer:
         return recommendations
     
     def get_similar_components_with_availability(self, component_id: int, category: str, n_recommendations: int = 5):
-   
+        """
+        Get similar components with availability information
+        """
         if self.tfidf_matrix is None:
             raise Exception("Model not trained!")
         
@@ -459,13 +470,18 @@ class PCRecommendationTrainer:
             # Check if component exists in database
             in_database = self.check_component_in_database(rec_id, rec_category)
             
+            # Handle NaN values safely
+            brand = component.get('brand', '')
+            if pd.isna(brand):
+                brand = ''
+            
             recommendations.append({
                 'id': rec_id,
                 'model_name': component['model_name'],
                 'category': rec_category,
                 'price': int(component.get('price', 0)),
                 'similarity_score': float(score),
-                'brand': component.get('brand', ''),
+                'brand': brand,
                 'in_database': in_database,
                 'availability_status': 'Available in store' if in_database else 'Reference only - Not in database',
                 'reason': self._generate_recommendation_reason(component, score)
@@ -518,13 +534,18 @@ class PCRecommendationTrainer:
             
             # STRICT CHECK: Only include if in database
             if self.check_component_in_database(rec_id, target_category):
+                # Handle NaN values safely
+                brand = component.get('brand', '')
+                if pd.isna(brand):
+                    brand = ''
+                
                 recommendations.append({
                     'id': rec_id,
                     'model_name': component['model_name'],
                     'category': component['category'],
                     'price': int(component.get('price', 0)),
                     'compatibility_score': float(score),
-                    'brand': component.get('brand', ''),
+                    'brand': brand,
                     'in_database': True,
                     'availability_status': 'Available in store',
                     'compatibility_notes': self._generate_compatibility_notes(component, current_build),
@@ -535,7 +556,9 @@ class PCRecommendationTrainer:
         return recommendations
     
     def get_compatible_components_with_availability(self, current_build: dict, target_category: str, n_recommendations: int = 5):
-    
+        """
+        Get compatible components with availability information
+        """
         target_components = self.components_df[self.components_df['category'] == target_category]
         
         if target_components.empty:
@@ -567,13 +590,18 @@ class PCRecommendationTrainer:
             if pd.isna(in_database):
                 in_database = self.check_component_in_database(rec_id, target_category)
             
+            # Handle NaN values safely
+            brand = component.get('brand', '')
+            if pd.isna(brand):
+                brand = ''
+            
             rec_dict = {
                 'id': rec_id,
                 'model_name': component['model_name'],
                 'category': component['category'],
                 'price': int(component.get('price', 0)),
                 'compatibility_score': float(score),
-                'brand': component.get('brand', ''),
+                'brand': brand,
                 'in_database': bool(in_database),
                 'availability_status': 'Available in store' if in_database else 'Reference only - Not in database',
                 'compatibility_notes': self._generate_compatibility_notes(component, current_build),
@@ -638,13 +666,18 @@ class PCRecommendationTrainer:
                 comp_features = self.tfidf_vectorizer.transform([train_component.iloc[0]['feature_text']])
                 similarity = cosine_similarity(target_features, comp_features)[0][0]
                 
+                # Handle NaN values safely
+                brand = db_component.get('brand', '')
+                if pd.isna(brand):
+                    brand = ''
+                
                 recommendations.append({
                     'id': db_component['id'],
                     'model_name': db_component.get('model_name', ''),
                     'category': category,
                     'price': db_component.get('price', 0),
                     'similarity_score': float(similarity),
-                    'brand': db_component.get('brand', ''),
+                    'brand': brand,
                     'in_database': True,
                     'availability_status': 'Available in store'
                 })

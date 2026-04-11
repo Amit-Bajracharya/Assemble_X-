@@ -1,1 +1,3 @@
-D:\Amit\Project II\assemblex\lib\user_page\tabbar\algorithm
+cd /home/amitbajracharya/Amit/app/Assemble_X-/lib/user_page/tabbar/algorithm/
+
+$ANDROID_HOME/emulator/emulator -avd Resizable_Experimental

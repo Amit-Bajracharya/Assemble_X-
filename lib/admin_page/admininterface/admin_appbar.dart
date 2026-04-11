@@ -20,36 +20,30 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       automaticallyImplyLeading: false, // disable auto leading
       leading: leading
-          ? Padding(
-              padding: const EdgeInsets.only(top: 20), // match title padding
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            )
+          ? IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          )
           : null,
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
-      title: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Row(
-          children: [
-            Image.asset('assets/images/logomain.png', height: 35),
-            const SizedBox(width: 10),
-            Text(
-              'Assemble_X',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: const Color.fromARGB(255, 253, 253, 253),
-              ),
+      title: Row(
+        children: [
+          Image.asset('assets/images/logomain.png', height: 45),
+          const SizedBox(width: 10),
+          Text(
+            'Assemble_X',
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: const Color.fromARGB(255, 253, 253, 253),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: 12, top: 20),
+          padding: const EdgeInsets.only(right: 12),
           child: Container(
             width: 38,
             height: 38,
